@@ -11,18 +11,16 @@ class Tokenizer:
 	def __iter__(self):
 		index = self.index
 
-		while True:
-			if index >= len(self.value):
-				yield (self.value[self.index:index], self.index, index)
-				self.index = index
-				break
-
+		while index < len(self.value):
 			if self.is_seperator(self.value[index]):
 				yield (self.value[self.index:index], self.index, index)
 
-				while self.is_seperator(self.value[index]):
+				while index < len(self.value) and self.is_seperator(self.value[index]):
 					index = index + 1
 
 				self.index = index
 
 			index = index + 1
+
+		if self.index < index:
+			yield (self.value[self.index:index], self.index, index)

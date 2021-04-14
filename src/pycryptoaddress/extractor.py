@@ -19,7 +19,6 @@ validators = (
 	("dash", lambda x: dash.match(x)),
 )
 
-
 class AddressExtractor:
 	def __init__(self):
 		pass
