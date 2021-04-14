@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import unittest
 
-from context import AddressExtractor, Tokenizer
+from .context import AddressExtractor, Tokenizer
 
 class TestTokenizer(unittest.TestCase):
 	def test(self):
