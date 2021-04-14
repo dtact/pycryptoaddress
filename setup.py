@@ -9,5 +9,6 @@ setup(
     packages=find_packages(where='src'),  # Required
     package_dir={'': 'src'},  # Optional
     install_requires=[
+		'base58'
     ]
 )

@@ -1,4 +1,8 @@
 import re
+import base58
+import hashlib
+import binascii
+
 from .tokenizer import Tokenizer
 
 bitcoin = re.compile(r"^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$")
@@ -9,12 +13,30 @@ bitcoin_cash = re.compile(r"^[13][a-km-zA-HJ-NP-Z1-9]{25,34}|^bitcoincash:?[q|p]
 zcash = re.compile(r"^t1[a-zA-Z0-9]{33}$")
 dash = re.compile(r"^X[1-9A-HJ-NP-Za-km-z]{33}$")
 
+def validate_bitcoin(x):
+	if not bitcoin.match(x):
+		return False
+
+	try:
+		base58Decoder = base58.b58decode(x).hex()
+	except ValueError as exc:
+		return False
+
+	prefixAndHash = base58Decoder[:len(base58Decoder)-8]
+	checksum = base58Decoder[len(base58Decoder)-8:]
+
+	hash = prefixAndHash
+	for x in range(1,3):
+		hash = hashlib.sha256(binascii.unhexlify(hash)).hexdigest()
+
+	return (checksum == hash[:8])
+
 validators = (
-	("bitcoin", lambda x: bitcoin.match(x)),
+	("bitcoin", validate_bitcoin),
 	("ethereum", lambda x: ethereum.match(x)),
 	("litecoin", lambda x: litecoin.match(x)),
 	("monero", lambda x: monero.match(x)),
-	("bitcoin_cash", lambda x: bitcoin_cash.match(x)),
+	# ("bitcoin_cash", lambda x: bitcoin_cash.match(x)),
 	("zcash", lambda x: zcash.match(x)),
 	("dash", lambda x: dash.match(x)),
 )

@@ -19,7 +19,7 @@ class TestTokenizer(unittest.TestCase):
 
 class TestParser(unittest.TestCase):
 	cases = [
-		("bitcoin", "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"),
+		("bitcoin", "1Lw5rqh94dWzArQ9tDY6Ucswxo3Ums7VWi"),
 		("ethereum", "0xb794f5ea0ba39494ce839613fffba74279579268"),
 		("litecoin", "MGxNPPB7eBoWPUaprtX9v9CXJZoD2465zN"),
 		("monero", "4AdUndXHHZ6cfufTMvppY6JwXNouMBzSkbLYfpAV5Usx3skxNgYeYTRj5UzqtReoS44qo9mtmXCqY45DJ852K5Jv2684Rge"),
