@@ -29,7 +29,17 @@ class TestParser(unittest.TestCase):
 		("dash", "XfcLDYdv97tc8YYbQqmR1gxBdLq4xfPNdy"),
 	]
 
-	def test(self):
+	def test_nomatch(self):
+		extractor = AddressExtractor()
+
+		for needle in extractor.finditer(""):
+			pass
+
+		for needle in extractor.finditer("::"):
+			pass
+
+
+	def test_extract(self):
 		extractor = AddressExtractor()
 
 		for (type, address) in self.cases:
