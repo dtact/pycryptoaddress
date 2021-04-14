@@ -13,6 +13,17 @@ bitcoin_cash = re.compile(r"^[13][a-km-zA-HJ-NP-Z1-9]{25,34}|^bitcoincash:?[q|p]
 zcash = re.compile(r"^t1[a-zA-Z0-9]{33}$")
 dash = re.compile(r"^X[1-9A-HJ-NP-Za-km-z]{33}$")
 
+def validate_litecoin(x):
+	if not litecoin.match(x):
+		return False
+
+	try:
+		base58Decoder = base58.b58decode(x).hex()
+	except ValueError as exc:
+		return False
+
+	return True
+
 def validate_bitcoin(x):
 	if not bitcoin.match(x):
 		return False
@@ -34,7 +45,7 @@ def validate_bitcoin(x):
 validators = (
 	("bitcoin", validate_bitcoin),
 	("ethereum", lambda x: ethereum.match(x)),
-	("litecoin", lambda x: litecoin.match(x)),
+	# ("litecoin", validate_litecoin),
 	("monero", lambda x: monero.match(x)),
 	# ("bitcoin_cash", lambda x: bitcoin_cash.match(x)),
 	("zcash", lambda x: zcash.match(x)),
