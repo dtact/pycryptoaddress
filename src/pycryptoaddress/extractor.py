@@ -3,6 +3,8 @@ import base58
 import hashlib
 import binascii
 
+import coinaddr
+
 from .tokenizer import Tokenizer
 
 bitcoin = re.compile(r"^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$")
@@ -18,33 +20,37 @@ def validate_litecoin(x):
 		return False
 
 	try:
-		base58Decoder = base58.b58decode(x).hex()
-	except ValueError as exc:
+		result = coinaddr.validate('litecoin', x)
+	except TypeError as exc:
 		return False
 
-	return True
+	return result.valid
 
 def validate_bitcoin(x):
 	if not bitcoin.match(x):
 		return False
 
 	try:
-		base58Decoder = base58.b58decode(x).hex()
-	except ValueError as exc:
+		result = coinaddr.validate('btc', x)
+	except TypeError as exc:
 		return False
 
-	prefixAndHash = base58Decoder[:len(base58Decoder)-8]
-	checksum = base58Decoder[len(base58Decoder)-8:]
+	return result.valid
 
-	hash = prefixAndHash
-	for x in range(1,3):
-		hash = hashlib.sha256(binascii.unhexlify(hash)).hexdigest()
+def validate_ethereum(x):
+	if not ethereum.match(x):
+		return False
 
-	return (checksum == hash[:8])
+	try:
+		result = coinaddr.validate('ethereum', x)
+	except TypeError as exc:
+		return False
+
+	return result.valid
 
 validators = (
 	("bitcoin", validate_bitcoin),
-	("ethereum", lambda x: ethereum.match(x)),
+	("ethereum", validate_ethereum),
 	# ("litecoin", validate_litecoin),
 	("monero", lambda x: monero.match(x)),
 	# ("bitcoin_cash", lambda x: bitcoin_cash.match(x)),
