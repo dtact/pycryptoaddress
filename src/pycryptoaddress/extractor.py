@@ -23,6 +23,8 @@ def validate_litecoin(x):
 		result = coinaddr.validate('litecoin', x)
 	except TypeError as exc:
 		return False
+	except ValueError as exc:
+		return False
 
 	return result.valid
 
@@ -34,6 +36,8 @@ def validate_bitcoin(x):
 		result = coinaddr.validate('btc', x)
 	except TypeError as exc:
 		return False
+	except ValueError as exc:
+		return False
 
 	return result.valid
 
@@ -44,6 +48,8 @@ def validate_ethereum(x):
 	try:
 		result = coinaddr.validate('ethereum', x)
 	except TypeError as exc:
+		return False
+	except ValueError as exc:
 		return False
 
 	return result.valid
