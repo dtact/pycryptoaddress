@@ -1,5 +1,10 @@
 # pycryptoaddress
 
+This library will extract crypto addresses from text (eg. tweets, pastebin, webpages, etc).
+
+
+## Example
+Extract the crypto addresses from the ransom note.
 
 ``` python
 from pycryptoaddress import AddressExtractor 
@@ -12,3 +17,12 @@ Address BTC 1CryptcfFKJJES1Gh5zAoFtmnPYLCRcMmY"""):
 
 ```
 
+# Creator
+
+[DTACT](https://dtact.com/)
+
+# Copyright and license
+
+Code and documentation copyright 2011-2021 DTACT.
+
+Code released under the Apache license.
